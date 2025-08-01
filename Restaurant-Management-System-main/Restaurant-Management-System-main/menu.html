@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category }} Menu</title>
+    <style>
+        body {
+            background: url("{{ url_for('static', filename=background_image) }}") no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: rgba(255, 255, 255, 0.8);
+            margin: 10px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        img {
+            width: 150px;
+            height: auto;
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ category }} Menu</h1>
+    <ul>
+        {% for item in items %}
+        <li>
+            <h3>{{ item[1] }}</h3>
+            <p>{{ item[2] }}</p>
+            <p>Price: ₹{{ item[3] }}</p>
+            <img src="{{ url_for('static', filename=item[4]) }}" alt="{{ item[1] }}">
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

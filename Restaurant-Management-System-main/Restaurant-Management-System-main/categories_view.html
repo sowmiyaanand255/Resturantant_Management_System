@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category | capitalize }} Menu</title>
+    <style>
+        /* Add your styles here */
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{{ category | upper }} MENU</h1>
+    </div>
+    <ul>
+        {% if category in categories %}
+            {% for item in categories[category]['items'] %}
+                <li>
+                    <img src="{{ url_for('static', filename=item[4]) }}" alt="{{ item[1] }}">
+                    <h3>{{ item[1] }}</h3>
+                    <p>{{ item[2] }}</p>
+                    <p>Price: ₹{{ item[3] }}</p>
+                    <div>
+                        <button onclick="addToFavorites({{ item[0] }})">Add to Favorites</button>
+                    </div>
+                </li>
+            {% endfor %}
+        {% else %}
+            <p>No items available for this category.</p>
+        {% endif %}
+    </ul>
+
+    <script>
+        function addToFavorites(itemId) {
+            fetch(`/favorites/add/${itemId}`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message); // Display success message
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

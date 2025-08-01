@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category.title() }} Menu</title>
+    <style>
+        <!-- Your styles here -->
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <h1>{{ category.title() }} Menu</h1>
+        <ul style="list-style: none; padding: 0;">
+            {% for item in items %}
+            <li class="menu-item">
+                <img src="{{ url_for('static', filename=item[4]) }}" alt="{{ item[1] }}">
+                <div class="menu-item-details">
+                    <h3>{{ item[1] }}</h3>
+                    <p>{{ item[2] }}</p>
+                    <p>Price: ₹{{ item[3] }}</p>
+                </div>
+                <div class="menu-item-buttons">
+                    <button onclick="addToFavorites('{{ username }}', {{ item[0] }})">Add to Favorites</button>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script>
+        function addToFavorites(username, itemId) {
+            fetch(`/add_to_favorites/${username}/${itemId}`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const toastHTML = `
+                        <div class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-body">${data.message}</div>
+                        </div>
+                    `;
+                    document.body.insertAdjacentHTML('beforeend', toastHTML);
+                    const toastElement = document.querySelector('.toast');
+                    new bootstrap.Toast(toastElement).show();
+                } else {
+                    alert(data.message);  // Fallback alert for error messages
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+
+</body>
+</html>

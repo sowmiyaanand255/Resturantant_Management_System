@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lunch Menu</title>
+    <style>
+        /* Add your styles here */
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <h1>{{ category }} Menu</h1>
+        
+        <!-- Debugging: Show raw data -->
+        <p>Items: {{ items }}</p>
+        
+        <ul style="list-style: none; padding: 0;">
+            {% for item in items %}
+            <li class="menu-item">
+                <img src="{{ url_for('static', filename=item[4]) }}" alt="{{ item[1] }}">
+                <div class="menu-item-details">
+                    <h3>{{ item[1] }}</h3>
+                    <p>{{ item[2] }}</p>
+                    <p>Price: ₹{{ item[3] }}</p>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+
+</html>

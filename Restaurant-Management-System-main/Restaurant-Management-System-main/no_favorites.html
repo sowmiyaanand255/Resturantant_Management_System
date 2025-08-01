@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ username }}'s Favorites</title>
+    <style>
+        body {
+            background-color: #222;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+        }
+        .btn-back {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #555;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>No Favorite Items Yet</h1>
+        <p>You haven't added any favorite items yet. Start exploring and add some!</p>
+        <button class="btn-back" onclick="window.location.href='{{ url_for('user_dashboard', username=username) }}'">Back to Dashboard</button>
+    </div>
+</body>
+</html>

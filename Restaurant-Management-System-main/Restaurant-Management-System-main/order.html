@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins:wght@300;400&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url("{{ url_for('static', filename='images/food-bg.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 25px;
+            border-radius: 12px;
+            width: 400px;
+            text-align: center;
+            margin-top: 80px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #FFD700;
+        }
+
+        .summary {
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .summary p {
+            margin: 5px 0;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #e64a19;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Confirm Your Order</h2>
+        <div class="summary">
+            <p><strong>Item:</strong> {{ item_name }}</p>
+            <p><strong>Price:</strong> ₹{{ price }}</p>
+            <p><strong>Quantity:</strong> {{ quantity }}</p>
+            <p><strong>Total:</strong> ₹{{ total_price }}</p>
+        </div>
+        <form action="{{ url_for('place_order', username=username, item_id=item_id) }}" method="POST">
+            <input id="location" name="location" type="text" placeholder="Enter delivery address" required>
+            <input id="contact" name="contact" type="tel" placeholder="Enter your contact number" required>
+            <button type="submit">Place Order</button>
+        </form>
+    </div>
+</body>
+</html>

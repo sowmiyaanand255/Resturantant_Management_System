@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category | capitalize }} Menu</title>
+    <style>
+        body {
+            font-family: 'Helvetica', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url("{{ url_for('static', filename='backgrounds/' + category + '.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .header h1 {
+            font-size: 36px;
+            color: white;
+            margin: 0;
+            text-shadow: 2px 2px 5px black;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        li {
+            background: rgba(0, 0, 0, 0.7);
+            margin: 15px;
+            padding: 20px;
+            border-radius: 10px;
+            width: 250px;
+            height: 550px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+        }
+        img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        h3 {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+        p {
+            margin: 5px 0;
+        }
+        .price {
+            font-weight: bold;
+        }
+        .stock {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .order-section {
+            margin-top: 15px;
+        }
+        .quantity-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .quantity-buttons button {
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 2px;
+            font-size: 14px;
+        }
+        .quantity-buttons button:hover {
+            background-color: #444;
+        }
+        .order-button, .favorites-button {
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 5px;
+        }
+        .order-button:disabled {
+            background-color: gray;
+            cursor: not-allowed;
+        }
+        .order-button:hover:not(:disabled), .favorites-button:hover {
+            background-color: #e64a19;
+        }
+        .no-items {
+            color: white;
+            text-align: center;
+            font-size: 24px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{{ category | upper }} MENU</h1>
+    </div>
+    <ul>
+        {% if items %}
+            {% for item in items %}
+                <li>
+                    <img src="{{ url_for('static', filename=item[4]) }}" alt="{{ item[1] }}">
+                    <h3>{{ item[1] }}</h3>
+                    <p>{{ item[2] }}</p>
+                    <p class="price">₹{{ item[3] }}</p>
+                    <p id="stock-message-{{ item[0] }}" class="stock" style="color: {{ 'red' if item[5] == 0 else 'lightgreen' }};">
+                        {% if item[5] == 0 %}
+                            Out of Stock
+                        {% else %}
+                            Stock: {{ item[5] }}
+                        {% endif %}
+                    </p>
+                    <div class="order-section">
+                        <div class="quantity-buttons">
+                            <button onclick="updateQuantity({{ item[0] }}, -1, {{ item[5] }})">-</button>
+                            <input id="quantity-input-{{ item[0] }}" type="number" value="1" readonly style="width: 50px; text-align: center;">
+                            <button onclick="updateQuantity({{ item[0] }}, 1, {{ item[5] }})">+</button>
+                        </div>
+                        <form action="{{ url_for('confirm_order', username=username, item_id=item[0]) }}" method="GET">
+                            <input id="hidden-quantity-input-{{ item[0] }}" name="quantity" type="hidden" value="1">
+                            <button id="order-button-{{ item[0] }}" type="submit" class="order-button" {% if item[5] == 0 %}disabled{% endif %}>
+                                Order
+                            </button>
+                        </form>
+                        <button class="favorites-button" onclick="addToFavorites('{{ username }}', {{ item[0] }})">
+                            Add to Favorites
+                        </button>
+                    </div>
+                </li>
+            {% endfor %}
+        {% else %}
+            <p class="no-items">No items available for this category.</p>
+        {% endif %}
+    </ul>
+
+    <script>
+        function updateQuantity(itemId, change, maxStock) {
+            const quantityInput = document.getElementById(`quantity-input-${itemId}`);
+            const hiddenQuantityInput = document.getElementById(`hidden-quantity-input-${itemId}`);
+            const orderButton = document.getElementById(`order-button-${itemId}`);
+
+            let currentQuantity = parseInt(quantityInput.value) || 1; // Default to 1
+            const newQuantity = currentQuantity + change;
+
+            if (newQuantity >= 1 && newQuantity <= maxStock) {
+                quantityInput.value = newQuantity;
+                hiddenQuantityInput.value = newQuantity;
+                orderButton.disabled = false; // Enable order button
+            } else if (newQuantity < 1) {
+                alert("Quantity must be at least 1.");
+            } else {
+                alert("Reached maximum stock.");
+            }
+        }
+
+        function addToFavorites(username, itemId) {
+            fetch(`/add_to_favorites/${username}/${itemId}`, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message || 'Added to favorites successfully!');
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Failed to add to favorites.");
+                });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Management</title>
+
+    <!-- Link to Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Lora&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS Styling -->
+    <style>
+        body {
+            font-family: 'Lora', serif;
+            background: url('{{ url_for('static', filename='images/home_background.jpg') }}') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.4); /* Darker overlay for classic feel */
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-family: 'Georgia', serif; /* Classic serif font for elegance */
+            font-size: 4rem; /* Larger font size for prominence */
+            font-weight: bold;
+            margin-top: 40px;
+            display: inline-block;
+        }
+
+        /* Styling for "The Wings" */
+        .wings {
+            color: white; /* White color for "The Wings" */
+            -webkit-text-stroke: 1px orange; /* Orange outline */
+            -webkit-text-fill-color: white; /* Fills the text with white */
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4); /* Soft shadow for depth */
+        }
+
+        /* Styling for "KING" */
+        .king {
+            color: gold; /* Gold color for "KING" */
+            -webkit-text-stroke: 1px orange; /* Orange outline for "KING" */
+            -webkit-text-fill-color: gold; /* Fills the text with gold */
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4); /* Soft shadow for depth */
+        }
+
+        /* Styling for Tamil Word "சுவை" */
+        .tamil-word {
+            font-size: 2.5rem; /* Slightly larger font size for emphasis */
+            color: white; /* White text */
+            -webkit-text-stroke: 1px orange; /* Orange outline */
+            -webkit-text-fill-color: white; /* Fills the text with white */
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4); /* Soft shadow for depth */
+        }
+
+        p {
+            font-family: 'Georgia', serif;
+            font-size: 1.3rem;
+            color: #fff;
+            margin-top: 20px;
+            font-style: italic;
+            font-weight: 300;
+            max-width: 800px; /* Limit width for better readability */
+        }
+
+        .order-btn {
+            background-color: #D2691E; /* Classic brown color */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-top: 30px;
+        }
+
+        .order-btn:hover {
+            background-color: #8B4513; /* Darker brown for hover effect */
+        }
+
+        .quote {
+            font-family: 'Georgia', serif;
+            font-size: 1.4rem;
+            color: #fff;
+            margin-top: 30px;
+            font-style: italic;
+            font-weight: 300;
+            max-width: 800px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>
+            <span class="wings">The Wings</span> <span class="king">KING</span> Restaurant
+        </h1>
+        <p>
+            We celebrate the art of chicken cuisine with dishes crafted to perfection. From tender, spice-kissed wings to aromatic, soul-soothing biryanis, every bite is a tribute to exceptional taste and quality. Inspired by the rich  <span class="tamil-word">சுவை</span> , our culinary journey brings together tradition and elegance.
+
+            At The Wings KING, we invite you to savor the unmatched taste of culinary royalty—where every dish is a masterpiece, and every meal is a celebration.
+        </p>
+        <a href="{{ url_for('login') }}">
+            <button class="order-btn">Order Now</button>
+        </a>
+        <div class="quote">
+            <p>"Bringing people together, one crispy bite at a time!"</p>
+        </div>
+    </div>
+
+</body>
+</html>

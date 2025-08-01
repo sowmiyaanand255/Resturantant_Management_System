@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Placed Successfully</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins:wght@300;400&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url("{{ url_for('static', filename='images/food-bg.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: white;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 25px;
+            border-radius: 12px;
+            width: 450px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 30px;
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+
+        .summary {
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .summary p {
+            margin: 8px 0;
+        }
+
+        .highlight {
+            color: #ffcc00;
+            font-weight: bold;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 18px;
+            background-color: #ff5722;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #e64a19;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🎉 Order Placed Successfully!</h2>
+        <div class="summary">
+            <p><strong>Customer:</strong> <span class="highlight">{{ username }}</span></p>
+            <p><strong>Item:</strong> {{ item_name }}</p>
+            <p><strong>Price:</strong> ₹{{ price }}</p>
+            <p><strong>Quantity:</strong> {{ quantity }}</p>
+            <p><strong>Total:</strong> ₹{{ total_price }}</p>
+            <p><strong>Delivery Address:</strong> {{ location }}</p>
+            <p><strong>Contact:</strong> {{ contact }}</p>
+            <p><strong>Order Date:</strong> {{ order_date }}</p>
+        </div>
+        <a href="{{ url_for('home') }}" class="btn">🏠 Back to Home</a>
+    </div>
+</body>
+</html>

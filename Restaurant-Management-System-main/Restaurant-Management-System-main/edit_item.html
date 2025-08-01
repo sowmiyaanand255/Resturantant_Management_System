@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Edit Menu Item</h2>
+    <form method="POST" action="{{ url_for('edit_item', item_id=item[0]) }}" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Food Name</label>
+            <input type="text" name="name" id="name" class="form-control" value="{{ item[1] }}" required>
+        </div>
+        <div class="form-group mt-3">
+            <label for="description">Description</label>
+            <textarea name="description" id="description" class="form-control" rows="3" required>{{ item[2] }}</textarea>
+        </div>
+        <div class="form-group mt-3">
+            <label for="price">Price ($)</label>
+            <input type="number" name="price" id="price" class="form-control" step="0.01" value="{{ item[3] }}" required>
+        </div>
+        <div class="form-group mt-3">
+            <label for="stock">Stock</label>
+            <input type="number" name="stock" id="stock" class="form-control" value="{{ item[4] }}" required>
+        </div>
+        <div class="form-group mt-3">
+            <label for="image">Upload New Image (optional)</label>
+            <input type="file" name="image" id="image" class="form-control" accept="image/*">
+            <small class="form-text text-muted">Leave blank to keep the current image.</small>
+        </div>
+        <button type="submit" class="btn btn-primary mt-4">Update Item</button>
+        <a href="{{ url_for('manager_dashboard') }}" class="btn btn-secondary mt-4">Cancel</a>
+    </form>
+</div>
+{% endblock %}

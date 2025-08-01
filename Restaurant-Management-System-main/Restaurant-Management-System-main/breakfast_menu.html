@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breakfast Menu</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Breakfast menu items here -->
+    <div class="menu-item">
+        <p>Dish Name</p>
+        <p>Price</p>
+        <button onclick="addToFavorites(1, 'Pancakes', '$10')">Add to Favorites</button>
+    </div>
+
+    <div class="menu-item">
+        <p>Dish Name</p>
+        <p>Price</p>
+        <button onclick="addToFavorites(2, 'Omelette', '$8')">Add to Favorites</button>
+    </div>
+
+    <script>
+        function addToFavorites(dishId, dishName, dishPrice) {
+            fetch('/add-to-favorites', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    dishId: dishId,
+                    dishName: dishName,
+                    dishPrice: dishPrice
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    alert('Dish added to favorites!');
+                } else {
+                    alert('Failed to add dish to favorites.');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

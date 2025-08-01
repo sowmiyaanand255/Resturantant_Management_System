@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+        .dashboard-container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .category-card, .favorites-section li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .category-card {
+            background: #6c757d;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .favorites-section {
+            background: #ffc107;
+            color: #000;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .loading-message {
+            font-size: 16px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Welcome, {{ username }}!</h1>
+
+        <div class="favorites-section">
+            <h2>Your Favorites</h2>
+            <div class="loading-message" style="display: none;">Loading your favorites...</div>
+            {% if favorites %}
+            <ul>
+                {% for item in favorites %}
+                <li>
+                    <div>
+                        <img src="{{ url_for('static', filename=item[4]) }}" alt="{{ item[1] }}">
+                        <strong>{{ item[1] }}</strong> - ₹{{ item[3] }}
+                    </div>
+                    <p>{{ item[2] }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>You have no favorite items yet.</p>
+            {% endif %}
+        </div>
+
+        <h2>Select a Category</h2>
+        {% for category_name, category_data in categories.items() %}
+        <div class="category-card">
+            <h2>{{ category_name.title() }}</h2>
+            <button onclick="viewCategory(this)">View</button>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        // Function to handle viewing categories
+        function viewCategory(button) {
+            button.textContent = 'Loading...';
+            button.disabled = true;
+            setTimeout(() => {
+                button.textContent = 'View';
+                button.disabled = false;
+                alert('Redirecting...');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

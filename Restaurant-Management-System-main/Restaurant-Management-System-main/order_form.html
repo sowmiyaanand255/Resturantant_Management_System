@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Merriweather:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Merriweather', serif;
+            margin: 0;
+            padding: 0;
+            background: url("{{ url_for('static', filename='images/backgrounds/royal.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.85);
+            padding: 25px;
+            border-radius: 15px;
+            width: 450px;
+            box-shadow: 0 10px 20px rgba(255, 223, 186, 0.3);
+            text-align: center;
+            border: 2px solid gold;
+        }
+
+        h2 {
+            font-size: 28px;
+            color: gold;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .summary {
+            font-size: 18px;
+            border-bottom: 1px solid gold;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .summary p {
+            margin: 10px 0;
+            font-weight: bold;
+            font-size: 18px;
+            color: #f1c40f;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            text-align: left;
+            margin-top: 10px;
+            color: #f1c40f;
+            font-size: 16px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background: #222;
+            color: white;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: gold;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #c9a500;
+        }
+
+        .icon {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Confirm Your Order</h2>
+        <div class="summary">
+            <p><span class="icon">🍽</span><strong>Item:</strong> {{ item_name }}</p>
+            <p><span class="icon">💰</span><strong>Price:</strong> ₹{{ price }}</p>
+            <p><span class="icon">🔢</span><strong>Quantity:</strong> {{ quantity }}</p>
+            <p><span class="icon">💵</span><strong>Total:</strong> ₹{{ total_price }}</p>
+        </div>
+        <form action="{{ url_for('place_order', username=username, item_id=item_id) }}" method="POST">
+            <label for="location"><span class="icon">📍</span> Delivery Location</label>
+            <input id="location" name="location" type="text" placeholder="Enter delivery address" required>
+
+            <label for="contact"><span class="icon">📞</span> Contact Number</label>
+            <input id="contact" name="contact" type="tel" placeholder="Enter your contact number" required>
+
+            <button type="submit"><span class="icon">✅</span> Place Order</button>
+        </form>
+    </div>
+</body>
+</html>
